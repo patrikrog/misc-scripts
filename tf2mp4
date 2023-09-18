@@ -1,0 +1,8 @@
+#!/bin/bash
+
+filename="$(basename $1 | cut -d. -f1)".mp4
+directory="$(dirname $1)"
+outputfile="$directory/$filename"
+
+ffmpeg -thread_queue_size 512 -framerate 60 -pattern_type glob -i "$directory/*.tga" -i $1 -c:v hevc_nvenc -c:a aac -b:a 192k -preset slow -b:v 24M $filename
+#mv "$directory/$filename" "$directory/.."
